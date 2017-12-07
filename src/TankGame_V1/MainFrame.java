@@ -19,6 +19,12 @@ public class MainFrame extends JFrame{
     }
 
     public MainFrame(){
+
+        mainPanel = new MainPanel();
+        this.add(mainPanel);
+
+
+
         this.setTitle("坦克大战1.0");
         this.setBounds(600,300,600,600);
         this.setVisible(true);
