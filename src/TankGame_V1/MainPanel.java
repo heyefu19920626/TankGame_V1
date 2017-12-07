@@ -19,9 +19,13 @@ public class MainPanel extends JPanel {
     * Description: 活动面板高度
     */
     final int height = 500;
+    /**
+    * Description: 我的坦克
+    */
+    MyTank myTank;
 
     public MainPanel() {
-
+        this.setSize(500,500);
     }
 
 
@@ -30,5 +34,19 @@ public class MainPanel extends JPanel {
         super.paint(g);
         g.setColor(Color.BLACK);
         g.fillRect(0,0,500,500);
+    }
+    
+    /**
+    *Description:
+     * @param g
+     * @param x
+     * @param y
+     * @param direction
+     * @param who
+    *@return void
+    *@author heyefu 22:51 2017/12/7
+    **/
+    public void paintTank(Graphics g, int x,int y,int direction,int who){
+        
     }
 }
