@@ -4,6 +4,8 @@ import com.sun.org.apache.xpath.internal.SourceTree;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 /**
  * Description:
@@ -12,7 +14,7 @@ import java.awt.*;
  * Create in: 2017-12-07
  * Time: 16:38
  **/
-public class MainPanel extends JPanel {
+public class MainPanel extends JPanel implements KeyListener{
     /**
     * Description: 活动面板宽度
     */
@@ -39,8 +41,7 @@ public class MainPanel extends JPanel {
         g.fillRect(0,0,500,500);
         paintTank(g,myTank.getX(),myTank.getY(),myTank.getDirection(),(int)(Math.random()*2));
     }
-
-    /**
+/**
     *Description:
      * @param g
      * @param x
@@ -97,5 +98,38 @@ public class MainPanel extends JPanel {
                 g.drawLine(x+15,y+10,x,y+10);
                 break;
         }
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+
+    }
+    /**
+    *Description: 监听按键移动坦克
+     * @param e
+    *@return void
+    *@author heyefu 17:02 2017/12/9
+    **/
+    public void keyPressed(KeyEvent e) {
+        if (e.getKeyCode() == KeyEvent.VK_UP){
+            myTank.moveUp();
+            myTank.setDirection(0);
+        }else if (e.getKeyCode() == KeyEvent.VK_DOWN){
+            myTank.moveDown();
+            myTank.setDirection(2);
+        }else if (e.getKeyCode() == KeyEvent.VK_LEFT){
+            myTank.moveLeft();
+            myTank.setDirection(3);
+        }else if (e.getKeyCode() == KeyEvent.VK_RIGHT){
+            myTank.moveRight();
+            myTank.setDirection(1);
+        }
+
+        this.repaint();
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+
     }
 }

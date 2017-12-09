@@ -21,6 +21,10 @@ public abstract class Tank {
     */
     protected int direction;
 
+    /**
+    * Description: 坦克的速度
+    */
+    protected int speed = 5;
 
     public Tank(int x, int y, int direction) {
         this.x = x;
@@ -50,6 +54,36 @@ public abstract class Tank {
 
     public void setDirection(int direction) {
         this.direction = direction;
+    }
+    /**
+    *Description: 向上移动
+     * @param
+    *@return void
+    *@author heyefu 16:42 2017/12/9
+    **/
+    public void moveUp(){
+        this.y -= this.speed;
+    }
+    /**
+    *Description: 向下移动
+     * @param
+    *@return void
+    *@author heyefu 16:44 2017/12/9
+    **/
+    public void moveDown(){
+        this.y += this.speed;
+    }
+    /**
+    *Description: 向左移动
+     * @param
+    *@return void
+    *@author heyefu 16:46 2017/12/9
+    **/
+    public void moveLeft(){
+        this.x -= this.speed;
+    }
+    public void  moveRight(){
+        this.x += this.speed;
     }
 }
 

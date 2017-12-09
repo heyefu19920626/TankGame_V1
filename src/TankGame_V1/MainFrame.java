@@ -12,7 +12,7 @@ import java.awt.*;
  **/
 public class MainFrame extends JFrame{
 
-    MainPanel mainPanel;
+    private MainPanel mainPanel = null;
     public static void main(String[] args) {
         new MainFrame();
     }
@@ -20,6 +20,8 @@ public class MainFrame extends JFrame{
     public MainFrame(){
 
         mainPanel = new MainPanel();
+//        注册面板的按键事件
+        this.addKeyListener(mainPanel);
 
 //        this.getContentPane().setVisible(false);
 //        this.setBackground(Color.green);
