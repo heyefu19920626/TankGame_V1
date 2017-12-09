@@ -9,11 +9,11 @@ package TankGame_V1;
  **/
 public abstract class Tank {
     /**
-    * Description: 坦克初始位置横坐标
+    * Description: 坦克中心位置横坐标
     */
     protected int x;
     /**
-    * Description: 坦克初始位置纵坐标
+    * Description: 坦克中心位置纵坐标
     */
     protected int y;
     /**

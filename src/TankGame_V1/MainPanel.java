@@ -63,39 +63,39 @@ public class MainPanel extends JPanel implements KeyListener{
 //            坦克方向向上
             case 0:
 //                画出左边矩形
-                g.fill3DRect(x,y,5,30,false);
+                g.fill3DRect(x-10,y-15,5,30,false);
 //                画出右边矩形
-                g.fill3DRect(x+15,y,5,30,false);
+                g.fill3DRect(x+5,y-15,5,30,false);
 //                画出中间矩形
-                g.fill3DRect(x+5,y+5,10,20,false);
+                g.fill3DRect(x-5,y-10,10,20,false);
 //                画出中间圆
-                g.fillOval(x+5,y+10,10,10);
+                g.fillOval(x-5,y-5,10,10);
 //                画出炮管
-                g.drawLine(x+10,y+15,x+10,y);
+                g.drawLine(x,y,x,y-15);
                 break;
 //            坦克方向向右
             case 1:
-                g.fill3DRect(x,y,30,5,false);
-                g.fill3DRect(x,y+15,30,5,false);
-                g.fill3DRect(x+5,y+5,20,10,false);
-                g.fillOval(x+10,y+5,10,10);
-                g.drawLine(x+15,y+10,x+30,y+10);
+                g.fill3DRect(x-15,y-10,30,5,false);
+                g.fill3DRect(x-15,y+5,30,5,false);
+                g.fill3DRect(x-10,y-5,20,10,false);
+                g.fillOval(x-5,y-5,10,10);
+                g.drawLine(x,y,x+15,y);
                 break;
 //            坦克方向向下
             case 2:
-                g.fill3DRect(x,y,5,30,false);
-                g.fill3DRect(x+15,y,5,30,false);
-                g.fill3DRect(x+5,y+5,10,20,false);
-                g.fillOval(x+5,y+10,10,10);
-                g.drawLine(x+10,y+15,x+10,y+30);
+                g.fill3DRect(x-10,y-15,5,30,false);
+                g.fill3DRect(x+5,y-15,5,30,false);
+                g.fill3DRect(x-5,y-10,10,20,false);
+                g.fillOval(x-5,y-5,10,10);
+                g.drawLine(x,y,x,y+15);
                 break;
 //            坦克方向向左
             case 3:
-                g.fill3DRect(x,y,30,5,false);
-                g.fill3DRect(x,y+15,30,5,false);
-                g.fill3DRect(x+5,y+5,20,10,false);
-                g.fillOval(x+10,y+5,10,10);
-                g.drawLine(x+15,y+10,x,y+10);
+                g.fill3DRect(x-15,y-10,30,5,false);
+                g.fill3DRect(x-15,y+5,30,5,false);
+                g.fill3DRect(x-10,y-5,20,10,false);
+                g.fillOval(x-5,y-5,10,10);
+                g.drawLine(x,y,x-15,y);
                 break;
         }
     }
