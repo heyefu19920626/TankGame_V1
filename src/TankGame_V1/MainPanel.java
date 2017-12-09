@@ -1,11 +1,13 @@
 package TankGame_V1;
 
+import com.sun.org.apache.xpath.internal.SourceTree;
+
 import javax.swing.*;
 import java.awt.*;
 
 /**
  * Description:
- * 坦克游戏活动面板
+ * 坦克活动面板
  * @author heyefu
  * Create in: 2017-12-07
  * Time: 16:38
@@ -25,6 +27,7 @@ public class MainPanel extends JPanel {
     MyTank myTank;
 
     public MainPanel() {
+        myTank = new MyTank(200,200,(int)(Math.random()*4));
         this.setSize(500,500);
     }
 
@@ -34,19 +37,65 @@ public class MainPanel extends JPanel {
         super.paint(g);
         g.setColor(Color.BLACK);
         g.fillRect(0,0,500,500);
+        paintTank(g,myTank.getX(),myTank.getY(),myTank.getDirection(),(int)(Math.random()*2));
     }
-    
+
     /**
     *Description:
      * @param g
      * @param x
      * @param y
      * @param direction
-     * @param who
+     * @param type
     *@return void
-    *@author heyefu 22:51 2017/12/7
+    *@author heyefu 13:13 2017/12/9
     **/
-    public void paintTank(Graphics g, int x,int y,int direction,int who){
-        
+    public void paintTank(Graphics g, int x,int y,int direction,int type){
+        switch (type){
+            case 0:
+                g.setColor(Color.cyan);
+                break;
+            default:
+                g.setColor(Color.red);
+        }
+        switch (direction){
+//            坦克方向向上
+            case 0:
+//                画出左边矩形
+                g.fill3DRect(x,y,5,30,false);
+//                画出右边矩形
+                g.fill3DRect(x+15,y,5,30,false);
+//                画出中间矩形
+                g.fill3DRect(x+5,y+5,10,20,false);
+//                画出中间圆
+                g.fillOval(x+5,y+10,10,10);
+//                画出炮管
+                g.drawLine(x+10,y+15,x+10,y);
+                break;
+//            坦克方向向右
+            case 1:
+                g.fill3DRect(x,y,30,5,false);
+                g.fill3DRect(x,y+15,30,5,false);
+                g.fill3DRect(x+5,y+5,20,10,false);
+                g.fillOval(x+10,y+5,10,10);
+                g.drawLine(x+15,y+10,x+30,y+10);
+                break;
+//            坦克方向向下
+            case 2:
+                g.fill3DRect(x,y,5,30,false);
+                g.fill3DRect(x+15,y,5,30,false);
+                g.fill3DRect(x+5,y+5,10,20,false);
+                g.fillOval(x+5,y+10,10,10);
+                g.drawLine(x+10,y+15,x+10,y+30);
+                break;
+//            坦克方向向左
+            case 3:
+                g.fill3DRect(x,y,30,5,false);
+                g.fill3DRect(x,y+15,30,5,false);
+                g.fill3DRect(x+5,y+5,20,10,false);
+                g.fillOval(x+10,y+5,10,10);
+                g.drawLine(x+15,y+10,x,y+10);
+                break;
+        }
     }
 }
