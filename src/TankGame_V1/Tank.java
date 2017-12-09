@@ -3,28 +3,33 @@ package TankGame_V1;
 /**
  * Description:
  * 坦克父类
+ *
  * @author heyefu
  * Create in: 2017-12-07
  * Time: 22:31
  **/
 public abstract class Tank {
     /**
-    * Description: 坦克中心位置横坐标
-    */
+     * Description: 坦克中心位置横坐标
+     */
     protected int x;
     /**
-    * Description: 坦克中心位置纵坐标
-    */
+     * Description: 坦克中心位置纵坐标
+     */
     protected int y;
     /**
-    * Description: 坦克的方向
-    */
+     * Description: 坦克的方向
+     */
     protected int direction;
 
     /**
-    * Description: 坦克的速度
-    */
+     * Description: 坦克的速度
+     */
     protected int speed = 5;
+    /**
+     * Description: 坦克的子弹
+     */
+    public Bullet bullet = null;
 
     public Tank(int x, int y, int direction) {
         this.x = x;
@@ -55,40 +60,68 @@ public abstract class Tank {
     public void setDirection(int direction) {
         this.direction = direction;
     }
+
     /**
-    *Description: 向上移动
+     * Description: 向上移动
+     *
      * @param
-    *@return void
-    *@author heyefu 16:42 2017/12/9
-    **/
-    public void moveUp(){
+     * @return void
+     * @author heyefu 16:42 2017/12/9
+     **/
+    public void moveUp() {
         this.y -= this.speed;
     }
+
     /**
-    *Description: 向下移动
+     * Description: 向下移动
+     *
      * @param
-    *@return void
-    *@author heyefu 16:44 2017/12/9
-    **/
-    public void moveDown(){
+     * @return void
+     * @author heyefu 16:44 2017/12/9
+     **/
+    public void moveDown() {
         this.y += this.speed;
     }
+
     /**
-    *Description: 向左移动
+     * Description: 向左移动
+     *
      * @param
-    *@return void
-    *@author heyefu 16:46 2017/12/9
-    **/
-    public void moveLeft(){
+     * @return void
+     * @author heyefu 16:46 2017/12/9
+     **/
+    public void moveLeft() {
         this.x -= this.speed;
     }
-    public void  moveRight(){
+
+    /**
+     * Description: 向右移动
+     *
+     * @param
+     * @return void
+     * @author heyefu 17:52 2017/12/9
+     **/
+    public void moveRight() {
         this.x += this.speed;
     }
+
+    /**
+     * Description: 坦克射击
+     *
+     * @param
+     * @return void
+     * @author heyefu 17:54 2017/12/9
+     **/
+    public void shot(int x, int y, int direction) {
+        bullet = new Bullet(this.x, this.y, this.direction);
+        Thread t = new Thread(bullet);
+        t.start();
+    }
+
 }
 
 
-class MyTank extends Tank{
+class MyTank extends Tank {
 
     public MyTank(int x, int y, int direction) {
         super(x, y, direction);
