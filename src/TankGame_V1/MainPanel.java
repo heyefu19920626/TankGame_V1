@@ -40,8 +40,26 @@ public class MainPanel extends JPanel implements KeyListener, Runnable {
         g.setColor(Color.BLACK);
         g.fillRect(0, 0, 500, 500);
         paintTank(g, myTank.getX(), myTank.getY(), myTank.getDirection(), 0);
-        if (myTank.bullet != null && myTank.bullet.isLive == true) {
-            paintBullet(g);
+//        if (myTank.bullets.size() > 0) {
+//            for (Bullet bullet : myTank.bullets
+//                    ) {
+//                if (bullet.isLive == true) {
+//                    paintBullet(g, bullet);
+//                }
+//                if (bullet.isLive == false){
+//                    myTank.bullets.remove(bullet);
+//                }
+//            }
+//        }
+        for (int i = 0; i < myTank.bullets.size(); i++) {
+            Bullet bullet = myTank.bullets.get(i);
+            if (bullet.isLive == true && bullet != null) {
+                paintBullet(g, bullet);
+            }
+
+            if (bullet.isLive == false) {
+                myTank.bullets.remove(i);
+            }
         }
     }
 
@@ -112,9 +130,9 @@ public class MainPanel extends JPanel implements KeyListener, Runnable {
      * @return void
      * @author heyefu 19:26 2017/12/9
      **/
-    public void paintBullet(Graphics g) {
+    public void paintBullet(Graphics g, Bullet bullet) {
         g.setColor(Color.red);
-        g.drawOval(myTank.bullet.getX(), myTank.bullet.getY(), 1, 1);
+        g.drawOval(bullet.getX(), bullet.getY(), 1, 1);
     }
 
     @Override

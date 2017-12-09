@@ -1,5 +1,7 @@
 package TankGame_V1;
 
+import java.util.Vector;
+
 /**
  * Description:
  * 坦克父类
@@ -29,7 +31,7 @@ public abstract class Tank {
     /**
      * Description: 坦克的子弹
      */
-    public Bullet bullet = null;
+    public Vector<Bullet> bullets = new Vector<Bullet>();
 
     public Tank(int x, int y, int direction) {
         this.x = x;
@@ -113,7 +115,8 @@ public abstract class Tank {
      * @author heyefu 17:54 2017/12/9
      **/
     public void shot(int x, int y, int direction) {
-        bullet = new Bullet(this.x, this.y, this.direction);
+        Bullet bullet = new Bullet(this.x, this.y, this.direction);
+        bullets.add(bullet);
         Thread t = new Thread(bullet);
         t.start();
     }
