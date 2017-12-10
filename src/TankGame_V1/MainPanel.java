@@ -29,18 +29,18 @@ public class MainPanel extends JPanel implements KeyListener, Runnable {
      */
     MyTank myTank;
     /**
-    * Description: 敌人的坦克
-    */
+     * Description: 敌人的坦克
+     */
     Vector<EnemyTank> enemyTanks = new Vector<EnemyTank>();
     /**
-    * Description:  敌人坦克的数量
-    */
+     * Description:  敌人坦克的数量
+     */
     private int enemyCount = 3;
 
     public MainPanel() {
         myTank = new MyTank(200, 200, (int) (Math.random() * 4));
         for (int i = 0; i < enemyCount; i++) {
-            EnemyTank enemyTank = new EnemyTank(50 + i*100, 15, 2);
+            EnemyTank enemyTank = new EnemyTank(50 + i * 100, 15, 2);
             enemyTanks.add(enemyTank);
         }
         this.setSize(500, 500);
@@ -51,13 +51,13 @@ public class MainPanel extends JPanel implements KeyListener, Runnable {
     public void paint(Graphics g) {
         super.paint(g);
         g.setColor(Color.BLACK);
-        g.fillRect(0, 0, 500, 500);
+        g.fillRect(0, 0, width, height);
         paintTank(g, myTank.getX(), myTank.getY(), myTank.getDirection(), 0);
         for (int i = 0; i < enemyTanks.size(); i++) {
             EnemyTank enemyTank = enemyTanks.get(i);
-            if (enemyTank.isLive){
-                paintTank(g, enemyTank.getX(), enemyTank.getY(), enemyTank.getDirection(),1);
-            }else {
+            if (enemyTank.isLive) {
+                paintTank(g, enemyTank.getX(), enemyTank.getY(), enemyTank.getDirection(), 1);
+            } else {
                 enemyTanks.remove(enemyTank);
             }
         }
@@ -170,17 +170,21 @@ public class MainPanel extends JPanel implements KeyListener, Runnable {
      **/
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_UP) {
-            myTank.moveUp();
             myTank.setDirection(0);
+            if (myTank.getY() - 15 > 0)
+                myTank.moveUp();
         } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-            myTank.moveDown();
             myTank.setDirection(2);
+            if (myTank.getY() + 15 < height)
+                myTank.moveDown();
         } else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-            myTank.moveLeft();
             myTank.setDirection(3);
+            if (myTank.getX() - 15 > 0)
+                myTank.moveLeft();
         } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-            myTank.moveRight();
             myTank.setDirection(1);
+            if (myTank.getX() + 15 < width)
+                myTank.moveRight();
         }
 
         if (e.getKeyCode() == KeyEvent.VK_J) {
@@ -211,12 +215,13 @@ public class MainPanel extends JPanel implements KeyListener, Runnable {
     }
 
     /**
-    *Description: 判断敌人坦克是否还存活
+     * Description: 判断敌人坦克是否还存活
+     *
      * @param
-    *@return void
-    *@author heyefu 14:02 2017/12/10
-    **/
-    public void judgeEnemyIsLive(){
+     * @return void
+     * @author heyefu 14:02 2017/12/10
+     **/
+    public void judgeEnemyIsLive() {
 //        取出我的坦克的每一颗子弹
         for (int i = 0; i < myTank.bullets.size(); i++) {
             Bullet bullet = myTank.bullets.get(i);
@@ -227,14 +232,14 @@ public class MainPanel extends JPanel implements KeyListener, Runnable {
                 int enemyTankX = enemyTank.getX();
                 int enemyTankY = enemyTank.getY();
                 if (enemyTank.getDirection() == 0 || enemyTank.getDirection() == 2) {
-                    if (enemyTankY + 15 >= bulletY && bulletY >= enemyTankY - 15 && enemyTankX - 10 <= bulletX && bulletX<= enemyTankX + 10) {
+                    if (enemyTankY + 15 >= bulletY && bulletY >= enemyTankY - 15 && enemyTankX - 10 <= bulletX && bulletX <= enemyTankX + 10) {
                         enemyTank.isLive = false;
                         enemyTanks.remove(enemyTank);
                         bullet.isLive = false;
                         myTank.bullets.remove(bullet);
                     }
-                }else {
-                    if (enemyTankY + 10 >= bulletY && bulletY >= enemyTankY - 10 && enemyTankX - 15 <= bulletX && bulletX<= enemyTankX + 15) {
+                } else {
+                    if (enemyTankY + 10 >= bulletY && bulletY >= enemyTankY - 10 && enemyTankX - 15 <= bulletX && bulletX <= enemyTankX + 15) {
                         enemyTank.isLive = false;
                         enemyTanks.remove(enemyTank);
                         bullet.isLive = false;
