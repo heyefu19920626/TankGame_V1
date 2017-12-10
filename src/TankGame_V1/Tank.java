@@ -29,6 +29,10 @@ public abstract class Tank {
      */
     protected int speed = 5;
     /**
+    * Description: 坦克是否存活
+    */
+    public boolean isLive = true;
+    /**
      * Description: 坦克的子弹
      */
     public Vector<Bullet> bullets = new Vector<Bullet>();
@@ -108,12 +112,13 @@ public abstract class Tank {
     }
 
     /**
-     * Description: 坦克射击
-     *
-     * @param
-     * @return void
-     * @author heyefu 17:54 2017/12/9
-     **/
+    *Description:
+     * @param x
+     * @param y
+     * @param direction
+    *@return void
+    *@author heyefu 13:44 2017/12/10
+    **/
     public void shot(int x, int y, int direction) {
         Bullet bullet = new Bullet(this.x, this.y, this.direction);
         bullets.add(bullet);
@@ -123,10 +128,25 @@ public abstract class Tank {
 
 }
 
-
+/**
+*Description: 玩家操作的坦克类
+*@author heyefu 13:38 2017/12/10
+**/
 class MyTank extends Tank {
 
     public MyTank(int x, int y, int direction) {
+        super(x, y, direction);
+    }
+}
+
+/**
+*Description:
+* 敌人的坦克类
+*@author heyefu 13:42 2017/12/10
+**/
+class EnemyTank extends Tank {
+
+    public EnemyTank(int x, int y, int direction) {
         super(x, y, direction);
     }
 }

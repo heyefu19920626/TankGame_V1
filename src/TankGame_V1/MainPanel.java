@@ -5,6 +5,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.Vector;
 
 /**
  * Description:
@@ -27,9 +28,21 @@ public class MainPanel extends JPanel implements KeyListener, Runnable {
      * Description: 我的坦克
      */
     MyTank myTank;
+    /**
+    * Description: 敌人的坦克
+    */
+    Vector<EnemyTank> enemyTanks = new Vector<EnemyTank>();
+    /**
+    * Description:  敌人坦克的数量
+    */
+    private int enemyCount = 3;
 
     public MainPanel() {
         myTank = new MyTank(200, 200, (int) (Math.random() * 4));
+        for (int i = 0; i < enemyCount; i++) {
+            EnemyTank enemyTank = new EnemyTank(50 + i*100, 15, 2);
+            enemyTanks.add(enemyTank);
+        }
         this.setSize(500, 500);
     }
 
@@ -40,6 +53,14 @@ public class MainPanel extends JPanel implements KeyListener, Runnable {
         g.setColor(Color.BLACK);
         g.fillRect(0, 0, 500, 500);
         paintTank(g, myTank.getX(), myTank.getY(), myTank.getDirection(), 0);
+        for (int i = 0; i < enemyTanks.size(); i++) {
+            EnemyTank enemyTank = enemyTanks.get(i);
+            if (enemyTank.isLive){
+                paintTank(g, enemyTank.getX(), enemyTank.getY(), enemyTank.getDirection(),1);
+            }else {
+                enemyTanks.remove(enemyTank);
+            }
+        }
 //        if (myTank.bullets.size() > 0) {
 //            for (Bullet bullet : myTank.bullets
 //                    ) {
@@ -183,9 +204,46 @@ public class MainPanel extends JPanel implements KeyListener, Runnable {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+            judgeEnemyIsLive();
 
             this.repaint();
         }
+    }
+
+    /**
+    *Description: 判断敌人坦克是否还存活
+     * @param
+    *@return void
+    *@author heyefu 14:02 2017/12/10
+    **/
+    public void judgeEnemyIsLive(){
+//        取出我的坦克的每一颗子弹
+        for (int i = 0; i < myTank.bullets.size(); i++) {
+            Bullet bullet = myTank.bullets.get(i);
+            int bulletX = bullet.getX();
+            int bulletY = bullet.getY();
+            for (int j = 0; j < enemyTanks.size(); j++) {
+                EnemyTank enemyTank = enemyTanks.get(j);
+                int enemyTankX = enemyTank.getX();
+                int enemyTankY = enemyTank.getY();
+                if (enemyTank.getDirection() == 0 || enemyTank.getDirection() == 2) {
+                    if (enemyTankY + 15 >= bulletY && bulletY >= enemyTankY - 15 && enemyTankX - 10 <= bulletX && bulletX<= enemyTankX + 10) {
+                        enemyTank.isLive = false;
+                        enemyTanks.remove(enemyTank);
+                        bullet.isLive = false;
+                        myTank.bullets.remove(bullet);
+                    }
+                }else {
+                    if (enemyTankY + 10 >= bulletY && bulletY >= enemyTankY - 10 && enemyTankX - 15 <= bulletX && bulletX<= enemyTankX + 15) {
+                        enemyTank.isLive = false;
+                        enemyTanks.remove(enemyTank);
+                        bullet.isLive = false;
+                        myTank.bullets.remove(bullet);
+                    }
+                }
+            }
+        }
+
     }
 
 }
