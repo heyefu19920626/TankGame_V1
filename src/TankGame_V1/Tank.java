@@ -37,6 +37,8 @@ public abstract class Tank {
      */
     public Vector<Bullet> bullets = new Vector<Bullet>();
 
+    public Bomb bomb = new Bomb();
+
     public Tank(int x, int y, int direction) {
         this.x = x;
         this.y = y;

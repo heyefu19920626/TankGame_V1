@@ -58,7 +58,8 @@ public class MainPanel extends JPanel implements KeyListener, Runnable {
             if (enemyTank.isLive) {
                 paintTank(g, enemyTank.getX(), enemyTank.getY(), enemyTank.getDirection(), 1);
             } else {
-                enemyTanks.remove(enemyTank);
+                paintBomb(g, enemyTank);
+//                enemyTanks.remove(enemyTank);
             }
         }
 //        if (myTank.bullets.size() > 0) {
@@ -156,6 +157,28 @@ public class MainPanel extends JPanel implements KeyListener, Runnable {
         g.drawOval(bullet.getX(), bullet.getY(), 1, 1);
     }
 
+    /**
+     * Description: 画出坦克被击中的爆炸效果
+     *
+     * @param g
+     * @param enemyTank
+     * @return void
+     * @author heyefu 16:42 2017/12/11
+     **/
+    public void paintBomb(Graphics g, EnemyTank enemyTank) {
+            if (enemyTank.bomb.image_life > 6) {
+                g.drawImage(enemyTank.bomb.bomb_1,enemyTank.getX() - 10, enemyTank.getY() - 15, 20, 30, null);
+            } else if (enemyTank.bomb.image_life > 3 ){
+                g.drawImage(enemyTank.bomb.bomb_2,enemyTank.getX() - 10, enemyTank.getY() - 15, 20, 30, null);
+            } else {
+                g.drawImage(enemyTank.bomb.bomb_3,enemyTank.getX() - 10, enemyTank.getY() - 15, 20, 30, null);
+            }
+            enemyTank.bomb.image_life--;
+
+        if (enemyTank.bomb.image_life <= 0)
+            enemyTanks.remove(enemyTank);
+    }
+
     @Override
     public void keyTyped(KeyEvent e) {
 
@@ -234,14 +257,14 @@ public class MainPanel extends JPanel implements KeyListener, Runnable {
                 if (enemyTank.getDirection() == 0 || enemyTank.getDirection() == 2) {
                     if (enemyTankY + 15 >= bulletY && bulletY >= enemyTankY - 15 && enemyTankX - 10 <= bulletX && bulletX <= enemyTankX + 10) {
                         enemyTank.isLive = false;
-                        enemyTanks.remove(enemyTank);
+//                        enemyTanks.remove(enemyTank);
                         bullet.isLive = false;
                         myTank.bullets.remove(bullet);
                     }
                 } else {
                     if (enemyTankY + 10 >= bulletY && bulletY >= enemyTankY - 10 && enemyTankX - 15 <= bulletX && bulletX <= enemyTankX + 15) {
                         enemyTank.isLive = false;
-                        enemyTanks.remove(enemyTank);
+//                        enemyTanks.remove(enemyTank);
                         bullet.isLive = false;
                         myTank.bullets.remove(bullet);
                     }
