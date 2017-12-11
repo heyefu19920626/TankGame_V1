@@ -36,6 +36,10 @@ public class MainPanel extends JPanel implements KeyListener, Runnable {
      * Description:  敌人坦克的数量
      */
     private int enemyCount = 3;
+    /**
+    * Description: 爆炸
+    */
+    Vector<Bomb> bombs = new Vector<Bomb>();
 
     public MainPanel() {
         myTank = new MyTank(200, 200, (int) (Math.random() * 4));
@@ -57,9 +61,6 @@ public class MainPanel extends JPanel implements KeyListener, Runnable {
             EnemyTank enemyTank = enemyTanks.get(i);
             if (enemyTank.isLive) {
                 paintTank(g, enemyTank.getX(), enemyTank.getY(), enemyTank.getDirection(), 1);
-            } else {
-                paintBomb(g, enemyTank);
-//                enemyTanks.remove(enemyTank);
             }
         }
 //        if (myTank.bullets.size() > 0) {
@@ -82,6 +83,11 @@ public class MainPanel extends JPanel implements KeyListener, Runnable {
             if (bullet.isLive == false) {
                 myTank.bullets.remove(i);
             }
+        }
+
+        for (int i = 0; i < bombs.size(); i++) {
+            Bomb bomb = bombs.get(i);
+            paintBomb(g, bomb);
         }
     }
 
@@ -158,25 +164,23 @@ public class MainPanel extends JPanel implements KeyListener, Runnable {
     }
 
     /**
-     * Description: 画出坦克被击中的爆炸效果
-     *
+    *Description: 画出坦克被击中的爆炸效果
      * @param g
-     * @param enemyTank
-     * @return void
-     * @author heyefu 16:42 2017/12/11
-     **/
-    public void paintBomb(Graphics g, EnemyTank enemyTank) {
-            if (enemyTank.bomb.image_life > 6) {
-                g.drawImage(enemyTank.bomb.bomb_1,enemyTank.getX() - 10, enemyTank.getY() - 15, 20, 30, null);
-            } else if (enemyTank.bomb.image_life > 3 ){
-                g.drawImage(enemyTank.bomb.bomb_2,enemyTank.getX() - 10, enemyTank.getY() - 15, 20, 30, null);
+     * @param bomb
+    *@return void
+    *@author heyefu 22:12 2017/12/11
+    **/
+    public void paintBomb(Graphics g, Bomb bomb) {
+            if (bomb.image_life > 6) {
+                g.drawImage(bomb.bomb_1,bomb.x, bomb.y, 20, 30, null);
+            } else if (bomb.image_life > 3 ){
+                g.drawImage(bomb.bomb_2,bomb.x, bomb.y, 20, 30, null);
             } else {
-                g.drawImage(enemyTank.bomb.bomb_3,enemyTank.getX() - 10, enemyTank.getY() - 15, 20, 30, null);
+                g.drawImage(bomb.bomb_3,bomb.x, bomb.y, 20, 30, null);
             }
-            enemyTank.bomb.image_life--;
-
-        if (enemyTank.bomb.image_life <= 0)
-            enemyTanks.remove(enemyTank);
+            bomb.image_life--;
+        if (bomb.image_life <= 0)
+            bombs.remove(bomb);
     }
 
     @Override
@@ -257,14 +261,18 @@ public class MainPanel extends JPanel implements KeyListener, Runnable {
                 if (enemyTank.getDirection() == 0 || enemyTank.getDirection() == 2) {
                     if (enemyTankY + 15 >= bulletY && bulletY >= enemyTankY - 15 && enemyTankX - 10 <= bulletX && bulletX <= enemyTankX + 10) {
                         enemyTank.isLive = false;
-//                        enemyTanks.remove(enemyTank);
+                        Bomb bomb = new Bomb(enemyTank.getX() - 15, enemyTank.getY() - 15);
+                        bombs.add(bomb);
+                        enemyTanks.remove(enemyTank);
                         bullet.isLive = false;
                         myTank.bullets.remove(bullet);
                     }
                 } else {
                     if (enemyTankY + 10 >= bulletY && bulletY >= enemyTankY - 10 && enemyTankX - 15 <= bulletX && bulletX <= enemyTankX + 15) {
                         enemyTank.isLive = false;
-//                        enemyTanks.remove(enemyTank);
+                        Bomb bomb = new Bomb(enemyTank.getX() - 15, enemyTank.getY() - 15);
+                        bombs.add(bomb);
+                        enemyTanks.remove(enemyTank);
                         bullet.isLive = false;
                         myTank.bullets.remove(bullet);
                     }

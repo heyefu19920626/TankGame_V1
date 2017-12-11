@@ -12,6 +12,14 @@ import java.awt.*;
  **/
 public class Bomb {
     /**
+    * Description: 爆炸效果横坐标
+    */
+    int x;
+    /**
+    * Description: 爆炸效果纵坐标
+    */
+    int y;
+    /**
      * Description: 爆炸图片1
      */
     Image bomb_1 = new ImageIcon("img/1.jpg").getImage();
@@ -30,5 +38,8 @@ public class Bomb {
     /**
     * Description: 爆炸的生命值
     */
-    int bomb_life = 3;
+    public Bomb(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
 }
