@@ -151,8 +151,8 @@ class MyTank extends Tank {
 class EnemyTank extends Tank implements Runnable {
 
     /**
-    * Description:计数器,使坦克变换方向不那么频繁
-    */
+     * Description:计数器,使坦克变换方向不那么频繁
+     */
     private int temp = 0;
 
     public EnemyTank(int x, int y, int direction) {
@@ -183,28 +183,28 @@ class EnemyTank extends Tank implements Runnable {
                 case 0:
                     if (this.y - 15 > 0) {
                         moveUp();
-                    }else {
+                    } else {
                         this.direction = (int) (Math.random() * 4);
                     }
                     break;
                 case 1:
                     if (this.x + 15 < 500) {
                         moveRight();
-                    }else {
+                    } else {
                         this.direction = (int) (Math.random() * 4);
                     }
                     break;
                 case 2:
                     if (this.y + 15 < 500) {
                         moveDown();
-                    }else {
+                    } else {
                         this.direction = (int) (Math.random() * 4);
                     }
                     break;
                 case 3:
                     if (this.x - 15 > 0) {
                         moveLeft();
-                    }else {
+                    } else {
                         this.direction = (int) (Math.random() * 4);
                     }
                     break;

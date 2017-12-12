@@ -6,18 +6,19 @@ import java.awt.*;
 /**
  * Description:
  * 爆炸类，保存爆炸图片
+ *
  * @author heyefu
  * Create in: 2017-12-11
  * Time: 16:17
  **/
 public class Bomb {
     /**
-    * Description: 爆炸效果横坐标
-    */
+     * Description: 爆炸效果横坐标
+     */
     int x;
     /**
-    * Description: 爆炸效果纵坐标
-    */
+     * Description: 爆炸效果纵坐标
+     */
     int y;
     /**
      * Description: 爆炸图片1
@@ -35,9 +36,10 @@ public class Bomb {
      * Description: 图片的生命值
      */
     int image_life = 9;
+
     /**
-    * Description: 爆炸的生命值
-    */
+     * Description: 爆炸的生命值
+     */
     public Bomb(int x, int y) {
         this.x = x;
         this.y = y;

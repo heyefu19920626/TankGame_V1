@@ -37,8 +37,8 @@ public class MainPanel extends JPanel implements KeyListener, Runnable {
      */
     private int enemyCount = 3;
     /**
-    * Description: 爆炸
-    */
+     * Description: 爆炸
+     */
     Vector<Bomb> bombs = new Vector<Bomb>();
 
     public MainPanel() {
@@ -59,16 +59,21 @@ public class MainPanel extends JPanel implements KeyListener, Runnable {
         g.setColor(Color.BLACK);
         g.fillRect(0, 0, width, height);
 //        画出自己的坦克
-        paintTank(g, myTank.getX(), myTank.getY(), myTank.getDirection(), 0);
+        if (myTank != null) {
+            if (myTank.isLive)
+                paintTank(g, myTank.getX(), myTank.getY(), myTank.getDirection(), 0);
+            else
+                myTank = null;
+        }
 //        画出敌人的坦克
         for (int i = 0; i < enemyTanks.size(); i++) {
             EnemyTank enemyTank = enemyTanks.get(i);
 //            画出敌人的子弹
             for (int j = 0; j < enemyTank.bullets.size(); j++) {
                 Bullet bullet = enemyTank.bullets.get(j);
-                if (bullet.isLive){
-                    paintBullet(g,bullet);
-                }else {
+                if (bullet.isLive) {
+                    paintBullet(g, bullet);
+                } else {
                     enemyTank.bullets.remove(bullet);
                 }
             }
@@ -88,14 +93,16 @@ public class MainPanel extends JPanel implements KeyListener, Runnable {
 //            }
 //        }
 //        画出自己坦克的子弹
-        for (int i = 0; i < myTank.bullets.size(); i++) {
-            Bullet bullet = myTank.bullets.get(i);
-            if (bullet.isLive == true && bullet != null) {
-                paintBullet(g, bullet);
-            }
+        if (myTank != null) {
+            for (int i = 0; i < myTank.bullets.size(); i++) {
+                Bullet bullet = myTank.bullets.get(i);
+                if (bullet.isLive == true && bullet != null) {
+                    paintBullet(g, bullet);
+                }
 
-            if (bullet.isLive == false) {
-                myTank.bullets.remove(i);
+                if (bullet.isLive == false) {
+                    myTank.bullets.remove(i);
+                }
             }
         }
 
@@ -170,8 +177,9 @@ public class MainPanel extends JPanel implements KeyListener, Runnable {
      * Description: 画出子弹
      *
      * @param g
+     * @param bullet
      * @return void
-     * @author heyefu 19:26 2017/12/9
+     * @author heyefu 14:45 2017/12/12
      **/
     public void paintBullet(Graphics g, Bullet bullet) {
         g.setColor(Color.red);
@@ -179,21 +187,22 @@ public class MainPanel extends JPanel implements KeyListener, Runnable {
     }
 
     /**
-    *Description: 画出坦克被击中的爆炸效果
+     * Description: 画出坦克被击中的爆炸效果
+     *
      * @param g
-     * @param bomb
-    *@return void
-    *@author heyefu 22:12 2017/12/11
-    **/
+     * @param bomb
+     * @return void
+     * @author heyefu 22:12 2017/12/11
+     **/
     public void paintBomb(Graphics g, Bomb bomb) {
-            if (bomb.image_life > 6) {
-                g.drawImage(bomb.bomb_1,bomb.x, bomb.y, 20, 30, null);
-            } else if (bomb.image_life > 3 ){
-                g.drawImage(bomb.bomb_2,bomb.x, bomb.y, 20, 30, null);
-            } else {
-                g.drawImage(bomb.bomb_3,bomb.x, bomb.y, 20, 30, null);
-            }
-            bomb.image_life--;
+        if (bomb.image_life > 6) {
+            g.drawImage(bomb.bomb_1, bomb.x, bomb.y, 20, 30, null);
+        } else if (bomb.image_life > 3) {
+            g.drawImage(bomb.bomb_2, bomb.x, bomb.y, 20, 30, null);
+        } else {
+            g.drawImage(bomb.bomb_3, bomb.x, bomb.y, 20, 30, null);
+        }
+        bomb.image_life--;
         if (bomb.image_life <= 0)
             bombs.remove(bomb);
     }
@@ -211,6 +220,9 @@ public class MainPanel extends JPanel implements KeyListener, Runnable {
      * @author heyefu 17:02 2017/12/9
      **/
     public void keyPressed(KeyEvent e) {
+        if (myTank == null)
+            return;
+
         if (e.getKeyCode() == KeyEvent.VK_UP) {
             myTank.setDirection(0);
             if (myTank.getY() - 15 > 0)
@@ -250,7 +262,12 @@ public class MainPanel extends JPanel implements KeyListener, Runnable {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            judgeEnemyIsLive();
+
+            if (myTank != null && enemyTanks.size() > 0) {
+                judgeEnemyIsLive();
+                judgeMyTankIsLive();
+            }
+
 
             this.repaint();
         }
@@ -297,4 +314,39 @@ public class MainPanel extends JPanel implements KeyListener, Runnable {
 
     }
 
+    /**
+     * Description: 判断自己的坦克是否还存活
+     *
+     * @param
+     * @return void
+     * @author heyefu 14:32 2017/12/12
+     **/
+    public void judgeMyTankIsLive() {
+//        取出每一辆敌人坦克及其子弹
+        for (int i = 0; i < enemyTanks.size(); i++) {
+            EnemyTank enemyTank = enemyTanks.get(i);
+            for (int j = 0; j < enemyTank.bullets.size(); j++) {
+                Bullet bullet = enemyTank.bullets.get(j);
+                int bulletX = bullet.getX();
+                int bulletY = bullet.getY();
+                if (myTank.direction == 0 || myTank.direction == 2) {
+                    if (bulletX < myTank.x + 10 && bulletX > myTank.x - 10 && bulletY > myTank.y - 15 && bulletY < myTank.y + 15) {
+                        Bomb bomb = new Bomb(myTank.x - 15, myTank.y - 15);
+                        bombs.add(bomb);
+                        myTank.isLive = false;
+                        bullet.isLive = false;
+                        enemyTank.bullets.remove(bullet);
+                    }
+                } else {
+                    if (bulletX < myTank.x + 15 && bulletX > myTank.x - 15 && bulletY > myTank.y - 10 && bulletY < myTank.y + 10) {
+                        Bomb bomb = new Bomb(myTank.x - 15, myTank.y - 15);
+                        bombs.add(bomb);
+                        myTank.isLive = false;
+                        bullet.isLive = false;
+                        enemyTank.bullets.remove(bullet);
+                    }
+                }
+            }
+        }
+    }
 }
