@@ -45,6 +45,8 @@ public class MainPanel extends JPanel implements KeyListener, Runnable {
         myTank = new MyTank(200, 200, (int) (Math.random() * 4));
         for (int i = 0; i < enemyCount; i++) {
             EnemyTank enemyTank = new EnemyTank(50 + i * 100, 15, 2);
+            Thread t = new Thread(enemyTank);
+            t.start();
             enemyTanks.add(enemyTank);
         }
         this.setSize(500, 500);
@@ -56,9 +58,20 @@ public class MainPanel extends JPanel implements KeyListener, Runnable {
         super.paint(g);
         g.setColor(Color.BLACK);
         g.fillRect(0, 0, width, height);
+//        画出自己的坦克
         paintTank(g, myTank.getX(), myTank.getY(), myTank.getDirection(), 0);
+//        画出敌人的坦克
         for (int i = 0; i < enemyTanks.size(); i++) {
             EnemyTank enemyTank = enemyTanks.get(i);
+//            画出敌人的子弹
+            for (int j = 0; j < enemyTank.bullets.size(); j++) {
+                Bullet bullet = enemyTank.bullets.get(j);
+                if (bullet.isLive){
+                    paintBullet(g,bullet);
+                }else {
+                    enemyTank.bullets.remove(bullet);
+                }
+            }
             if (enemyTank.isLive) {
                 paintTank(g, enemyTank.getX(), enemyTank.getY(), enemyTank.getDirection(), 1);
             }
@@ -74,6 +87,7 @@ public class MainPanel extends JPanel implements KeyListener, Runnable {
 //                }
 //            }
 //        }
+//        画出自己坦克的子弹
         for (int i = 0; i < myTank.bullets.size(); i++) {
             Bullet bullet = myTank.bullets.get(i);
             if (bullet.isLive == true && bullet != null) {
@@ -85,6 +99,7 @@ public class MainPanel extends JPanel implements KeyListener, Runnable {
             }
         }
 
+//        画出爆炸效果
         for (int i = 0; i < bombs.size(); i++) {
             Bomb bomb = bombs.get(i);
             paintBomb(g, bomb);

@@ -148,9 +148,67 @@ class MyTank extends Tank {
  *
  * @author heyefu 13:42 2017/12/10
  **/
-class EnemyTank extends Tank {
+class EnemyTank extends Tank implements Runnable {
+
+    /**
+    * Description:计数器,使坦克变换方向不那么频繁
+    */
+    private int temp = 0;
 
     public EnemyTank(int x, int y, int direction) {
         super(x, y, direction);
+    }
+
+    @Override
+    public void run() {
+        while (this.isLive) {
+            try {
+                Thread.sleep(200);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            if (Math.random() < 0.05)
+                this.shot(this.x, this.y, this.direction);
+
+//            一秒钟换一次方向
+            if (this.temp > 5) {
+                this.direction = (int) (Math.random() * 4);
+                this.temp = 0;
+            }
+
+            this.temp++;
+
+//            移动坦克
+            switch (this.direction) {
+                case 0:
+                    if (this.y - 15 > 0) {
+                        moveUp();
+                    }else {
+                        this.direction = (int) (Math.random() * 4);
+                    }
+                    break;
+                case 1:
+                    if (this.x + 15 < 500) {
+                        moveRight();
+                    }else {
+                        this.direction = (int) (Math.random() * 4);
+                    }
+                    break;
+                case 2:
+                    if (this.y + 15 < 500) {
+                        moveDown();
+                    }else {
+                        this.direction = (int) (Math.random() * 4);
+                    }
+                    break;
+                case 3:
+                    if (this.x - 15 > 0) {
+                        moveLeft();
+                    }else {
+                        this.direction = (int) (Math.random() * 4);
+                    }
+                    break;
+            }
+        }
     }
 }
