@@ -13,23 +13,33 @@ public class TestIo {
 
     public static void main(String[] args) throws IOException {
 
+        File file_1 = new File("F:/测试IO.txt");
+        File file_2 = new File("F:/测试IO2.txt");
+
+
         FileWriter fileWriter = null;
+        FileReader fileReader = null;
 
+        fileReader = new FileReader(file_1);
+        fileWriter = new FileWriter(file_2);
 
-        try {
-            fileWriter = new FileWriter("F:/测试IO.txt");
-            fileWriter.write("测试IO第二次");
+        char[] testIo = new char[10];
+        int len = 0;
+        while ((len = fileReader.read(testIo)) != -1){
+            String string = new String(testIo, 0, len);
+            fileWriter.write(string);
             fileWriter.flush();
-            fileWriter.write("1234445阿大纲");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }finally {
-            try {
-                fileWriter.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
+
+
+        fileReader.close();
+        fileWriter.close();
+
+
+
+
+
+
     }
 
 }

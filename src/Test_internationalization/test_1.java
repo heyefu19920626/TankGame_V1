@@ -22,10 +22,11 @@ public class test_1 {
         ResourceBundle res;
         int i = 0;
         //通过ResourceBundle工具类绑定资源文件(包名.文件名(基本名称不包括语言部分和后缀部分))
-        if (i == 0)
-            res = ResourceBundle.getBundle("info", locale);
+        System.out.println("Local default = " + locale2);
+        if (locale2.getLanguage().equals("zh"))
+            res = ResourceBundle.getBundle("info", locale2);
         else
-            res = ResourceBundle.getBundle("info", locale1);
+            res = ResourceBundle.getBundle("info", locale2);
 
         //模拟用户登陆
         Scanner in = new Scanner(System.in);
