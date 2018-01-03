@@ -13,8 +13,23 @@ public class TestIo {
 
     public static void main(String[] args) throws IOException {
 
-        File file_1 = new File("F:/测试IO.txt");
-        File file_2 = new File("F:/测试IO2.txt");
+        String osName = System.getProperties().getProperty("os.name");
+
+        System.out.println("-----操作系统名称是:" + osName);
+
+        File file_1 = null;
+        File file_2 = null;
+
+        if (osName.indexOf("Linux") > -1){
+            System.out.println("Linux操作系统");
+            file_1 = new File("/home","IO.txt");
+            file_2 = new File("/home","IO.txt");
+        }else {
+            System.out.println("非Linux操作系统");
+            file_1 = new File("F:/测试IO.txt");
+            file_2 = new File("F:/测试IO2.txt");
+        }
+
 
 
         FileWriter fileWriter = null;
@@ -30,16 +45,8 @@ public class TestIo {
             fileWriter.write(string);
             fileWriter.flush();
         }
-
-
         fileReader.close();
         fileWriter.close();
-
-
-
-
-
-
     }
 
 }
