@@ -17,6 +17,7 @@ public class TestIo {
 
         System.out.println("-----操作系统名称是:" + osName);
 
+        System.out.println("测试git config --global credential.helper store");
         File file_1 = null;
         File file_2 = null;
 
