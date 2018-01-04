@@ -25,11 +25,18 @@ public class TestIo {
         if (osName.indexOf("Linux") > -1){
             System.out.println("Linux操作系统");
             file_1 = new File("/home","IO.txt");
-            file_2 = new File("/home","IO.txt");
+            file_2 = new File("/home","IO2.txt");
         }else {
             System.out.println("非Linux操作系统");
             file_1 = new File("F:/测试IO.txt");
             file_2 = new File("F:/测试IO2.txt");
+        }
+
+
+        if (!file_2.exists()){
+            file_2.createNewFile();
+        }else{
+            System.out.println("file_2已经存在！");
         }
 
 
