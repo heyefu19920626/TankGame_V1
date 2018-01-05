@@ -11,14 +11,14 @@ import java.io.*;
  **/
 public class TestIo {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
 
         String osName = System.getProperties().getProperty("os.name");
 
         System.out.println("-----操作系统名称是:" + osName);
 
         System.out.println("测试git config --global credential.helper store");
-        System.out.println("测试git config --global credential.helper store");
+
         File file_1 = null;
         File file_2 = null;
 
@@ -34,7 +34,12 @@ public class TestIo {
 
 
         if (!file_1.exists()){
-            file_1.createNewFile();
+            try {
+                file_1.createNewFile();
+            } catch (IOException e) {
+                System.out.println("创建文件发生错误！");
+                e.printStackTrace();
+            }
         }else{
             System.out.println("file_1已经存在！");
         }
@@ -44,18 +49,33 @@ public class TestIo {
         FileWriter fileWriter = null;
         FileReader fileReader = null;
 
-        fileReader = new FileReader(file_1);
-        fileWriter = new FileWriter(file_2);
-
+        try {
+            fileReader = new FileReader(file_1);
+        } catch (FileNotFoundException e) {
+            System.out.println("没有找到文件file_1!");
+            e.printStackTrace();
+        }
         char[] testIo = new char[10];
         int len = 0;
-        while ((len = fileReader.read(testIo)) != -1){
-            String string = new String(testIo, 0, len);
-            fileWriter.write(string);
-            fileWriter.flush();
+        try {
+            fileWriter = new FileWriter(file_2);
+            while ((len = fileReader.read(testIo)) != -1){
+                String string = new String(testIo, 0, len);
+                fileWriter.write(string);
+                fileWriter.flush();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally {
+            try {
+                fileReader.close();
+                fileWriter.close();
+            } catch (IOException e) {
+                System.out.println("文件流关闭异常!");
+                e.printStackTrace();
+            }
         }
-        fileReader.close();
-        fileWriter.close();
+
     }
 
 }
