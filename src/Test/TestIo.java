@@ -33,10 +33,10 @@ public class TestIo {
         }
 
 
-        if (!file_2.exists()){
-            file_2.createNewFile();
+        if (!file_1.exists()){
+            file_1.createNewFile();
         }else{
-            System.out.println("file_2已经存在！");
+            System.out.println("file_1已经存在！");
         }
 
 
