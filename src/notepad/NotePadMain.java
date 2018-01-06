@@ -17,6 +17,7 @@ public class NotePadMain extends JFrame implements ActionListener{
 
 //    中间可编辑文本区
     JTextArea jTextArea = null;
+    JScrollPane jScrollPane = null;
 //    工具条
     JMenuBar jMenuBar = null;
 //    文件菜单
@@ -27,12 +28,13 @@ public class NotePadMain extends JFrame implements ActionListener{
 
     public NotePadMain(){
         jTextArea = new JTextArea();
+        jScrollPane = new JScrollPane(jTextArea);
         jMenuBar = new JMenuBar();
         fileMenu = new JMenu("文件");
         openFile = new JMenuItem("打开");
         saveFile = new JMenuItem("保存");
 
-        this.add(jTextArea);
+        this.add(jScrollPane);
         this.setJMenuBar(jMenuBar);
         jMenuBar.add(fileMenu);
         fileMenu.add(openFile);
