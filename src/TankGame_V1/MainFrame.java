@@ -13,27 +13,30 @@ import java.awt.*;
  **/
 public class MainFrame extends JFrame {
 
+    private BeginPanel beginPanel = null;
     private MainPanel mainPanel = null;
-
-    public static void main(String[] args) {
-        new MainFrame();
-    }
 
     public MainFrame() {
 
-        mainPanel = new MainPanel();
-        Thread t = new Thread(mainPanel);
-        t.start();
-//        注册面板的按键事件
-        this.addKeyListener(mainPanel);
+        beginPanel = new BeginPanel();
+        this.add(beginPanel);
+//        mainPanel = new MainPanel();
+//        Thread t = new Thread(mainPanel);
+//        t.start();
+////        注册面板的按键事件
+//        this.addKeyListener(mainPanel);
 
 //        this.getContentPane().setVisible(false);
 //        this.setBackground(Color.green);
         this.getContentPane().setBackground(Color.green);
-        this.add(mainPanel);
+//        this.add(mainPanel);
         this.setTitle("坦克大战1.0");
         this.setBounds(600, 300, 600, 600);
         this.setVisible(true);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+
+    public static void main(String[] args) {
+        new MainFrame();
     }
 }
