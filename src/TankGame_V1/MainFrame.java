@@ -11,7 +11,7 @@ import java.awt.*;
  * Create in: 2017-12-07
  * Time: 16:13
  **/
-public class MainFrame extends JFrame {
+public class MainFrame extends JFrame implements Runnable {
 
     private BeginPanel beginPanel = null;
     private MainPanel mainPanel = null;
@@ -22,6 +22,7 @@ public class MainFrame extends JFrame {
         Thread t_BeaginPanel = new Thread(beginPanel);
         t_BeaginPanel.start();
         this.add(beginPanel);
+        this.addMouseListener(beginPanel);
 //        mainPanel = new MainPanel();
 //        Thread t = new Thread(mainPanel);
 //        t.start();
@@ -39,6 +40,41 @@ public class MainFrame extends JFrame {
     }
 
     public static void main(String[] args) {
-        new MainFrame();
+        MainFrame mainFrame = new MainFrame();
+        Thread t = new Thread(mainFrame);
+        t.start();
+    }
+
+    /**
+     * Description:
+     * 开始游戏，移除开始面板，增加游戏主面板
+     *
+     * @param
+     * @return void
+     * @author heyefu 15:16 2018/1/8
+     **/
+    public void startGame() {
+        this.remove(beginPanel);
+        beginPanel = null;
+        mainPanel = new MainPanel();
+        Thread t_MainPanel = new Thread(mainPanel);
+        t_MainPanel.start();
+        this.add(mainPanel);
+        this.setVisible(true);
+    }
+
+    @Override
+    public void run() {
+        while (true) {
+            try {
+                Thread.sleep(50);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            if (this.beginPanel.isBegin) {
+                this.startGame();
+                break;
+            }
+        }
     }
 }
