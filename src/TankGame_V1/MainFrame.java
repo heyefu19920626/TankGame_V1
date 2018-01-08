@@ -19,6 +19,8 @@ public class MainFrame extends JFrame {
     public MainFrame() {
 
         beginPanel = new BeginPanel();
+        Thread t_BeaginPanel = new Thread(beginPanel);
+        t_BeaginPanel.start();
         this.add(beginPanel);
 //        mainPanel = new MainPanel();
 //        Thread t = new Thread(mainPanel);
