@@ -154,9 +154,18 @@ class EnemyTank extends Tank implements Runnable {
      * Description:计数器,使坦克变换方向不那么频繁
      */
     private int temp = 0;
+    /**
+     * Description:外面的坦克向量
+     */
+    private Vector<EnemyTank> enemyTanks = null;
+
 
     public EnemyTank(int x, int y, int direction) {
         super(x, y, direction);
+    }
+
+    public void setEnemyTanks(Vector<EnemyTank> enemyTanks) {
+        this.enemyTanks = enemyTanks;
     }
 
     @Override
@@ -181,28 +190,28 @@ class EnemyTank extends Tank implements Runnable {
 //            移动坦克
             switch (this.direction) {
                 case 0:
-                    if (this.y - 15 > 0) {
+                    if (this.y - 15 > 0 && !this.collideOtherTank()) {
                         moveUp();
                     } else {
                         this.direction = (int) (Math.random() * 4);
                     }
                     break;
                 case 1:
-                    if (this.x + 15 < 500) {
+                    if (this.x + 15 < 500 && !this.collideOtherTank()) {
                         moveRight();
                     } else {
                         this.direction = (int) (Math.random() * 4);
                     }
                     break;
                 case 2:
-                    if (this.y + 15 < 500) {
+                    if (this.y + 15 < 500 && !this.collideOtherTank()) {
                         moveDown();
                     } else {
                         this.direction = (int) (Math.random() * 4);
                     }
                     break;
                 case 3:
-                    if (this.x - 15 > 0) {
+                    if (this.x - 15 > 0 && !this.collideOtherTank()) {
                         moveLeft();
                     } else {
                         this.direction = (int) (Math.random() * 4);
@@ -210,5 +219,84 @@ class EnemyTank extends Tank implements Runnable {
                     break;
             }
         }
+    }
+
+    //前方是否有其他坦克
+    public boolean collideOtherTank(){
+        for (int i = 0; i < enemyTanks.size(); i++) {
+            EnemyTank otherTank = enemyTanks.get(i);
+            //如果不是自己
+            if (otherTank != this){
+                switch (this.direction){
+                    case 0:
+                        if (otherTank.direction == 0 || otherTank.direction == 2){
+                            if (this.y - 15 <= otherTank.y + 15 && this.y - 15 >= otherTank.y - 15
+                                    && this.x - 10 >= otherTank.x - 10 && this.x -10 <= otherTank.x + 10){
+                                return true;
+                            }else {
+                                return false;
+                            }
+                        }else {
+                            if (this.y - 15 <= otherTank.y + 10 && this.y - 15 >= otherTank.y - 10
+                                    && this.x + 10 >= otherTank.x - 15 && this.x + 10 <= otherTank.x + 15){
+                                return true;
+                            }else {
+                                return false;
+                            }
+                        }
+                    case 1:
+                        if (otherTank.direction == 0 || otherTank.direction == 2){
+                            if (this.y - 10 <= otherTank.y + 15 && this.y - 10 >= otherTank.y - 15
+                                    && this.x + 15 >= otherTank.x - 10 && this.x + 15 <= otherTank.x + 10){
+                                return true;
+                            }else {
+                                return false;
+                            }
+                        }else {
+                            if (this.y - 10 <= otherTank.y + 10 && this.y - 10 >= otherTank.y - 10
+                                    && this.x - 15 >= otherTank.x - 15 && this.x - 15 <= otherTank.x + 15){
+                                return true;
+                            }else {
+                                return false;
+                            }
+                        }
+                    case 2:
+                        if (otherTank.direction == 0 || otherTank.direction == 2){
+                            if (this.y + 15 <= otherTank.y + 15 && this.y + 15 >= otherTank.y - 15
+                                    && this.x - 10 >= otherTank.x - 10 && this.x -10 <= otherTank.x + 10){
+                                return true;
+                            }else {
+                                return false;
+                            }
+                        }else {
+                            if (this.y + 15 <= otherTank.y + 10 && this.y + 15 >= otherTank.y - 10
+                                    && this.x - 10 >= otherTank.x - 15 && this.x - 10 <= otherTank.x + 15){
+                                return true;
+                            }else {
+                                return false;
+                            }
+                        }
+                    case 3:
+                        if (otherTank.direction == 0 || otherTank.direction == 2){
+                            if (this.y - 10 <= otherTank.y + 15 && this.y - 10 >= otherTank.y - 15
+                                    && this.x - 15 >= otherTank.x - 10 && this.x - 15 <= otherTank.x + 10){
+                                return true;
+                            }else {
+                                return false;
+                            }
+                        }else {
+                            if (this.y - 10 <= otherTank.y + 10 && this.y - 10 >= otherTank.y - 10
+                                    && this.x - 15 >= otherTank.x - 15 && this.x - 15 <= otherTank.x + 15){
+                                return true;
+                            }else {
+                                return false;
+                            }
+                        }
+                }
+
+
+            }
+        }
+        return false;
     }
 }

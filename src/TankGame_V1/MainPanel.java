@@ -35,7 +35,7 @@ public class MainPanel extends JPanel implements KeyListener, Runnable {
     /**
      * Description:  敌人坦克的数量
      */
-    private int enemyCount = 5;
+    private int enemyCount = 15;
     /**
      * Description: 爆炸
      */
@@ -45,6 +45,8 @@ public class MainPanel extends JPanel implements KeyListener, Runnable {
         myTank = new MyTank(200, 200, (int) (Math.random() * 4));
         for (int i = 0; i < enemyCount; i++) {
             EnemyTank enemyTank = new EnemyTank((int) (Math.random() * width), (int) (Math.random() * height), (int) (Math.random() * 4));
+            //将面板中的敌人坦克传递给创建的每个坦克
+            enemyTank.setEnemyTanks(enemyTanks);
             Thread t = new Thread(enemyTank);
             t.start();
             enemyTanks.add(enemyTank);
@@ -348,5 +350,9 @@ public class MainPanel extends JPanel implements KeyListener, Runnable {
                 }
             }
         }
+    }
+
+    public Vector<EnemyTank> getEnemyTanks() {
+        return enemyTanks;
     }
 }
