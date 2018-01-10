@@ -35,7 +35,7 @@ public class MainPanel extends JPanel implements KeyListener, Runnable {
     /**
      * Description:  敌人坦克的数量
      */
-    private int enemyCount = 15;
+    private int enemyCount = 25;
     /**
      * Description: 爆炸
      */

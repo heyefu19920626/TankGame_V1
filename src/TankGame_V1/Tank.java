@@ -230,15 +230,18 @@ class EnemyTank extends Tank implements Runnable {
                 switch (this.direction){
                     case 0:
                         if (otherTank.direction == 0 || otherTank.direction == 2){
-                            if (this.y - 15 <= otherTank.y + 15 && this.y - 15 >= otherTank.y - 15
-                                    && this.x - 10 >= otherTank.x - 10 && this.x -10 <= otherTank.x + 10){
+                            if ((this.y - 15 <= otherTank.y + 15 && this.y - 15 >= otherTank.y - 15
+                                    && this.x - 10 >= otherTank.x - 10 && this.x -10 <= otherTank.x + 10)
+                                    || (this.y - 15 <= otherTank.y +15 && this.y - 15 >= otherTank.y - 15
+                            && this.x + 10 >= otherTank.x - 10 && this.x + 10 <= otherTank.x + 10)){
                                 return true;
                             }else {
                                 return false;
                             }
                         }else {
                             if (this.y - 15 <= otherTank.y + 10 && this.y - 15 >= otherTank.y - 10
-                                    && this.x + 10 >= otherTank.x - 15 && this.x + 10 <= otherTank.x + 15){
+                                    && (this.x + 10 >= otherTank.x - 15 && this.x + 10 <= otherTank.x + 15
+                            || this.x - 10 >= otherTank.x - 15 && this.x - 10 <= otherTank.x + 15)){
                                 return true;
                             }else {
                                 return false;
@@ -246,14 +249,16 @@ class EnemyTank extends Tank implements Runnable {
                         }
                     case 1:
                         if (otherTank.direction == 0 || otherTank.direction == 2){
-                            if (this.y - 10 <= otherTank.y + 15 && this.y - 10 >= otherTank.y - 15
+                            if ((this.y - 10 <= otherTank.y + 15 && this.y - 10 >= otherTank.y - 15
+                            || this.y + 10 <= otherTank.y + 15 && this.y + 10 >= otherTank.y - 15)
                                     && this.x + 15 >= otherTank.x - 10 && this.x + 15 <= otherTank.x + 10){
                                 return true;
                             }else {
                                 return false;
                             }
                         }else {
-                            if (this.y - 10 <= otherTank.y + 10 && this.y - 10 >= otherTank.y - 10
+                            if ((this.y - 10 <= otherTank.y + 10 && this.y - 10 >= otherTank.y - 10
+                            || this.y + 10 <= otherTank.y + 10 && this.y + 10 >= otherTank.y - 10)
                                     && this.x - 15 >= otherTank.x - 15 && this.x - 15 <= otherTank.x + 15){
                                 return true;
                             }else {
@@ -263,14 +268,16 @@ class EnemyTank extends Tank implements Runnable {
                     case 2:
                         if (otherTank.direction == 0 || otherTank.direction == 2){
                             if (this.y + 15 <= otherTank.y + 15 && this.y + 15 >= otherTank.y - 15
-                                    && this.x - 10 >= otherTank.x - 10 && this.x -10 <= otherTank.x + 10){
+                                    && (this.x - 10 >= otherTank.x - 10 && this.x -10 <= otherTank.x + 10
+                            || this.x + 10 >= otherTank.x - 10 && this.x + 10 <= otherTank.x + 10)){
                                 return true;
                             }else {
                                 return false;
                             }
                         }else {
                             if (this.y + 15 <= otherTank.y + 10 && this.y + 15 >= otherTank.y - 10
-                                    && this.x - 10 >= otherTank.x - 15 && this.x - 10 <= otherTank.x + 15){
+                                    && (this.x - 10 >= otherTank.x - 15 && this.x - 10 <= otherTank.x + 15
+                            || this.x + 10 >= otherTank.x - 15 && this.x + 10 <= otherTank.x + 15)){
                                 return true;
                             }else {
                                 return false;
@@ -278,14 +285,16 @@ class EnemyTank extends Tank implements Runnable {
                         }
                     case 3:
                         if (otherTank.direction == 0 || otherTank.direction == 2){
-                            if (this.y - 10 <= otherTank.y + 15 && this.y - 10 >= otherTank.y - 15
+                            if ((this.y - 10 <= otherTank.y + 15 && this.y - 10 >= otherTank.y - 15
+                            || this.y + 10 <= otherTank.y + 15 && this.y + 10 >= otherTank.y - 15)
                                     && this.x - 15 >= otherTank.x - 10 && this.x - 15 <= otherTank.x + 10){
                                 return true;
                             }else {
                                 return false;
                             }
                         }else {
-                            if (this.y - 10 <= otherTank.y + 10 && this.y - 10 >= otherTank.y - 10
+                            if ((this.y - 10 <= otherTank.y + 10 && this.y - 10 >= otherTank.y - 10
+                            || this.y + 10 <= otherTank.y + 10 && this.y + 10 >= otherTank.y - 10)
                                     && this.x - 15 >= otherTank.x - 15 && this.x - 15 <= otherTank.x + 15){
                                 return true;
                             }else {
