@@ -221,89 +221,88 @@ class EnemyTank extends Tank implements Runnable {
         }
     }
 
-    //前方是否有其他坦克
-    public boolean collideOtherTank(){
+    /**
+     * Description:
+     * 判断前方是否有其他敌方坦克
+     *
+     * @param
+     * @return boolean
+     * @author heyefu 下午11:18 18-1-10
+     **/
+    public boolean collideOtherTank() {
         for (int i = 0; i < enemyTanks.size(); i++) {
             EnemyTank otherTank = enemyTanks.get(i);
-            //如果不是自己
-            if (otherTank != this){
-                switch (this.direction){
+//            如果不是自己
+            if (otherTank != this) {
+                switch (this.direction) {
+//                    如果自己朝上
                     case 0:
-                        if (otherTank.direction == 0 || otherTank.direction == 2){
-                            if ((this.y - 15 <= otherTank.y + 15 && this.y - 15 >= otherTank.y - 15
-                                    && this.x - 10 >= otherTank.x - 10 && this.x -10 <= otherTank.x + 10)
-                                    || (this.y - 15 <= otherTank.y +15 && this.y - 15 >= otherTank.y - 15
-                            && this.x + 10 >= otherTank.x - 10 && this.x + 10 <= otherTank.x + 10)){
+//                        如果其他坦克朝上或者朝下
+                        if (otherTank.direction == 0 || otherTank.direction == 2) {
+//                            当自己的上边线在其他坦克上下边线之间且自己左边线或者右边线在其他坦克左右边线之间时，两个坦克为碰撞状态
+//                            返回真
+                            if ((this.y - 15 < otherTank.y + 15 && this.y - 15 > otherTank.y - 15
+                                    && this.x - 10 > otherTank.x - 10 && this.x - 10 < otherTank.x + 10)
+                                    || (this.y - 15 < otherTank.y + 15 && this.y - 15 > otherTank.y - 15
+                                    && this.x + 10 > otherTank.x - 10 && this.x + 10 < otherTank.x + 10)) {
                                 return true;
-                            }else {
-                                return false;
                             }
-                        }else {
-                            if (this.y - 15 <= otherTank.y + 10 && this.y - 15 >= otherTank.y - 10
-                                    && (this.x + 10 >= otherTank.x - 15 && this.x + 10 <= otherTank.x + 15
-                            || this.x - 10 >= otherTank.x - 15 && this.x - 10 <= otherTank.x + 15)){
+                        } else {
+                            if (this.y - 15 < otherTank.y + 10 && this.y - 15 > otherTank.y - 10
+                                    && (this.x + 10 > otherTank.x - 15 && this.x + 10 < otherTank.x + 15
+                                    || this.x - 10 > otherTank.x - 15 && this.x - 10 < otherTank.x + 15)) {
                                 return true;
-                            }else {
-                                return false;
                             }
                         }
+                        break;
                     case 1:
-                        if (otherTank.direction == 0 || otherTank.direction == 2){
-                            if ((this.y - 10 <= otherTank.y + 15 && this.y - 10 >= otherTank.y - 15
-                            || this.y + 10 <= otherTank.y + 15 && this.y + 10 >= otherTank.y - 15)
-                                    && this.x + 15 >= otherTank.x - 10 && this.x + 15 <= otherTank.x + 10){
+//                        当自己的右边线在其他坦克的左右边线之间且自己上边线或者下边线在其他坦克上下边线之前时
+//                        返回真
+                        if (otherTank.direction == 0 || otherTank.direction == 2) {
+                            if ((this.y - 10 < otherTank.y + 15 && this.y - 10 > otherTank.y - 15
+                                    || this.y + 10 < otherTank.y + 15 && this.y + 10 > otherTank.y - 15)
+                                    && this.x + 15 > otherTank.x - 10 && this.x + 15 < otherTank.x + 10) {
                                 return true;
-                            }else {
-                                return false;
                             }
-                        }else {
-                            if ((this.y - 10 <= otherTank.y + 10 && this.y - 10 >= otherTank.y - 10
-                            || this.y + 10 <= otherTank.y + 10 && this.y + 10 >= otherTank.y - 10)
-                                    && this.x - 15 >= otherTank.x - 15 && this.x - 15 <= otherTank.x + 15){
+                        } else {
+                            if ((this.y - 10 < otherTank.y + 10 && this.y - 10 > otherTank.y - 10
+                                    || this.y + 10 < otherTank.y + 10 && this.y + 10 > otherTank.y - 10)
+                                    && this.x + 15 > otherTank.x - 15 && this.x + 15 < otherTank.x + 15) {
                                 return true;
-                            }else {
-                                return false;
                             }
                         }
+                        break;
                     case 2:
-                        if (otherTank.direction == 0 || otherTank.direction == 2){
-                            if (this.y + 15 <= otherTank.y + 15 && this.y + 15 >= otherTank.y - 15
-                                    && (this.x - 10 >= otherTank.x - 10 && this.x -10 <= otherTank.x + 10
-                            || this.x + 10 >= otherTank.x - 10 && this.x + 10 <= otherTank.x + 10)){
+                        if (otherTank.direction == 0 || otherTank.direction == 2) {
+                            if (this.y + 15 < otherTank.y + 15 && this.y + 15 > otherTank.y - 15
+                                    && (this.x - 10 > otherTank.x - 10 && this.x - 10 < otherTank.x + 10
+                                    || this.x + 10 > otherTank.x - 10 && this.x + 10 < otherTank.x + 10)) {
                                 return true;
-                            }else {
-                                return false;
                             }
-                        }else {
-                            if (this.y + 15 <= otherTank.y + 10 && this.y + 15 >= otherTank.y - 10
-                                    && (this.x - 10 >= otherTank.x - 15 && this.x - 10 <= otherTank.x + 15
-                            || this.x + 10 >= otherTank.x - 15 && this.x + 10 <= otherTank.x + 15)){
+                        } else {
+                            if (this.y + 15 < otherTank.y + 10 && this.y + 15 > otherTank.y - 10
+                                    && (this.x - 10 > otherTank.x - 15 && this.x - 10 < otherTank.x + 15
+                                    || this.x + 10 > otherTank.x - 15 && this.x + 10 < otherTank.x + 15)) {
                                 return true;
-                            }else {
-                                return false;
                             }
                         }
+                        break;
                     case 3:
-                        if (otherTank.direction == 0 || otherTank.direction == 2){
-                            if ((this.y - 10 <= otherTank.y + 15 && this.y - 10 >= otherTank.y - 15
-                            || this.y + 10 <= otherTank.y + 15 && this.y + 10 >= otherTank.y - 15)
-                                    && this.x - 15 >= otherTank.x - 10 && this.x - 15 <= otherTank.x + 10){
+                        if (otherTank.direction == 0 || otherTank.direction == 2) {
+                            if ((this.y - 10 < otherTank.y + 15 && this.y - 10 > otherTank.y - 15
+                                    || this.y + 10 < otherTank.y + 15 && this.y + 10 > otherTank.y - 15)
+                                    && this.x - 15 > otherTank.x - 10 && this.x - 15 < otherTank.x + 10) {
                                 return true;
-                            }else {
-                                return false;
                             }
-                        }else {
-                            if ((this.y - 10 <= otherTank.y + 10 && this.y - 10 >= otherTank.y - 10
-                            || this.y + 10 <= otherTank.y + 10 && this.y + 10 >= otherTank.y - 10)
-                                    && this.x - 15 >= otherTank.x - 15 && this.x - 15 <= otherTank.x + 15){
+                        } else {
+                            if ((this.y - 10 < otherTank.y + 10 && this.y - 10 > otherTank.y - 10
+                                    || this.y + 10 < otherTank.y + 10 && this.y + 10 > otherTank.y - 10)
+                                    && this.x - 15 > otherTank.x - 15 && this.x - 15 < otherTank.x + 15) {
                                 return true;
-                            }else {
-                                return false;
                             }
                         }
+                        break;
                 }
-
-
             }
         }
         return false;
