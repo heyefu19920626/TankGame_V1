@@ -305,6 +305,7 @@ class EnemyTank extends Tank implements Runnable {
                 }
             }
         }
+//         如果以上都为没有返回真，则前方没有其他坦克，返回假
         return false;
     }
 }
