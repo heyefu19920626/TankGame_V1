@@ -2,6 +2,8 @@ package TankGame_V1;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * Description:
@@ -11,30 +13,48 @@ import java.awt.*;
  * Create in: 2017-12-07
  * Time: 16:13
  **/
-public class MainFrame extends JFrame implements Runnable {
+public class MainFrame extends JFrame implements Runnable, ActionListener {
 
+    //    开始面板
     private BeginPanel beginPanel = null;
+    //    主游戏面板
     private MainPanel mainPanel = null;
+    //    工具栏
+    private JMenuBar menuBar = null;
+    //    游戏菜单
+    private JMenu game = null;
+    //    开始子菜单
+    private JMenuItem startGame = null;
+    //    保存子菜单
+    private JMenuItem saveGame = null;
 
     public MainFrame() {
+
+        menuBar = new JMenuBar();
+        game = new JMenu("游戏");
+        startGame = new JMenuItem("开始游戏");
+        saveGame = new JMenuItem("保存游戏");
+
+        this.setJMenuBar(menuBar);
+        menuBar.add(game);
+        game.add(startGame);
+        game.add(saveGame);
+
+        startGame.setActionCommand("startGame");
+        startGame.addActionListener(this);
+        saveGame.setActionCommand("saveGame");
+        saveGame.addActionListener(this);
 
         beginPanel = new BeginPanel();
         Thread t_BeaginPanel = new Thread(beginPanel);
         t_BeaginPanel.start();
         this.add(beginPanel);
         this.addMouseListener(beginPanel);
-//        mainPanel = new MainPanel();
-//        Thread t = new Thread(mainPanel);
-//        t.start();
-////        注册面板的按键事件
-//        this.addKeyListener(mainPanel);
 
-//        this.getContentPane().setVisible(false);
-//        this.setBackground(Color.green);
         this.getContentPane().setBackground(Color.green);
-//        this.add(mainPanel);
+
         this.setTitle("坦克大战1.0");
-        this.setBounds(600, 300, 600, 600);
+        this.setBounds(600, 300, 700, 700);
         this.setVisible(true);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
@@ -60,6 +80,7 @@ public class MainFrame extends JFrame implements Runnable {
         Thread t_MainPanel = new Thread(mainPanel);
         t_MainPanel.start();
         this.add(mainPanel);
+        this.addKeyListener(mainPanel);
         this.setVisible(true);
     }
 
@@ -71,10 +92,25 @@ public class MainFrame extends JFrame implements Runnable {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            if (this.beginPanel.isBegin) {
-                this.startGame();
-                break;
+            if (beginPanel != null) {
+                if (this.beginPanel.isBegin) {
+                    this.startGame();
+                    break;
+                }
             }
         }
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
+        if (e.getActionCommand().equals("startGame")) {
+            if (this.beginPanel == null && mainPanel != null) {
+                System.out.println("游戏已经开始!");
+                return;
+            }
+            this.startGame();
+        }
+
     }
 }

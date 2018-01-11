@@ -35,11 +35,15 @@ public class MainPanel extends JPanel implements KeyListener, Runnable {
     /**
      * Description:  敌人坦克的数量
      */
-    private int enemyCount = 25;
+    private int enemyCount = 5;
     /**
      * Description: 爆炸
      */
     Vector<Bomb> bombs = new Vector<Bomb>();
+    /**
+     * Description: 击杀的敌方坦克数量
+     */
+    private int killEnemys = 0;
 
     public MainPanel() {
         myTank = new MyTank(200, 200, (int) (Math.random() * 4));
@@ -83,6 +87,19 @@ public class MainPanel extends JPanel implements KeyListener, Runnable {
                 paintTank(g, enemyTank.getX(), enemyTank.getY(), enemyTank.getDirection(), 1);
             }
         }
+
+//        画出敌人坦克标志
+        paintTank(g, 230, 550, 0, 1);
+        g.setFont(new Font("华文行楷", Font.BOLD, 24));
+//        画出剩余敌人坦克数量
+        g.drawString(Integer.toString(enemyCount), 225, 600);
+
+//        画出消灭的敌方坦克标志
+        paintTank(g, 550, 250, 0, 1);
+//        画出消灭的敌方坦克总数
+        g.drawString(String.valueOf(killEnemys), 545, 300);
+
+
 //        if (myTank.bullets.size() > 0) {
 //            for (Bullet bullet : myTank.bullets
 //                    ) {
@@ -298,6 +315,8 @@ public class MainPanel extends JPanel implements KeyListener, Runnable {
                         Bomb bomb = new Bomb(enemyTank.getX() - 15, enemyTank.getY() - 15);
                         bombs.add(bomb);
                         enemyTanks.remove(enemyTank);
+                        enemyCount--;
+                        killEnemys++;
                         bullet.isLive = false;
                         myTank.bullets.remove(bullet);
                     }
@@ -307,6 +326,8 @@ public class MainPanel extends JPanel implements KeyListener, Runnable {
                         Bomb bomb = new Bomb(enemyTank.getX() - 15, enemyTank.getY() - 15);
                         bombs.add(bomb);
                         enemyTanks.remove(enemyTank);
+                        enemyCount--;
+                        killEnemys++;
                         bullet.isLive = false;
                         myTank.bullets.remove(bullet);
                     }
