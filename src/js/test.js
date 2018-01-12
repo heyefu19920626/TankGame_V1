@@ -1,6 +1,6 @@
 var page = require('webpage').create();
 var address = "http://localhost:8080/export/listAndImgExport.jsp";
-var output = './2.png';
+var output = '../img/2.png';
 page.viewportSize = { width: 1600,height: 900};
 page.open(address, function (status) {
     if (status !== 'success') {

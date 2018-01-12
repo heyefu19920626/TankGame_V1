@@ -10,7 +10,7 @@ if (system.args.length === 1) {
     phantom.exit();
 }
 page.settings.loadImages = false;  //为了提升加载速度，不加载图片
-page.settings.resourceTimeout = 10000;//超过10秒放弃加载
+page.settings.resourceTimeout = 100000;//超过10秒放弃加载
 //此处是用来设置截图的参数。不截图没啥用
 page.viewportSize = {
     width: 1280,
@@ -30,6 +30,7 @@ t = Date.now();//看看加载需要多久。
 address = system.args[1];
 page.open(address, function(status) {
     if (status !== 'success') {
+        console.log(address);
         console.log('FAIL to load the address');
     } else {
         t = Date.now() - t;
@@ -43,6 +44,7 @@ page.open(address, function(status) {
 //console.log就是传输回去的内容。
         console.log('Loading time ' + t + ' msec');
         console.log(page.content);
+        page.render("../img/huicong.png");
         setTimeout(function(){ phantom.exit(); }, 6000);
     }
     phantom.exit();

@@ -1,17 +1,17 @@
 var page = require('webpage').create();
-var address = 'http://192.168.51.251:8080/ump-console/skins/menutree/desktopLR.jsp';//填写需要打印的文件位置
-var output = './screen.png';//存储文件路径和名称
+var address = 'http://localhost:8080/login.do';//填写需要打印的文件位置
+var output = '../img/screen.png';//存储文件路径和名称
 page.viewportSize = { width: 1280, height: 800 };//设置长宽
 
 var flag = phantom.addCookie({
-    "domain": "192.168.51.100",
+    "domain": "localhost",
     "expires": "Fri, 01 Jan 2038 00:00:00 GMT",
     "expiry": 2145916800,
     "httponly": true,
     "name": "JSESSIONID",
-    "path": "/ump-console/",
+    "path": "/",
     "secure": false,
-    "value": "2CDD6EDBC55B13B73218EDF298EFCDE0" //这里省略了，输入自己的value即可
+    "value": "D3C172233163F6A8DCA6486007B37D34" //这里省略了，输入自己的value即可
 });
 
 console.log(flag);

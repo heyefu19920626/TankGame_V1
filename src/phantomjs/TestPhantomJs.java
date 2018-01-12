@@ -20,13 +20,15 @@ public class TestPhantomJs {
     //    private static String exePath = projectPath + File.separator + "phantomjs" + File.separator + "bin" + File.separator
 //            + "phantomjs.exe";
     private static String exePath = projectPath + File.separator + "src"  + File.separator + "tools" + File.separator + "phantomjs.exe";
+    private static String exePath_linux = projectPath + File.separator + "src"  + File.separator + "tools" + File.separator + "phantomjs";
 
     public static void main(String[] args) throws IOException, SAXException
     {
 
         // 测试调用。传入url即可
         System.out.println(TestPhantomJs.projectPath);
-        String html = getParseredHtml2("http://huisheng99.b2b.hc360.com/");
+//        String html = getParseredHtml2("http://huisheng99.b2b.hc360.com/");
+        String html = getParseredHtml2("https://www.jianshu.com/p/62d947731401");
         System.out.println("html: " + html);
     }
 
@@ -34,7 +36,8 @@ public class TestPhantomJs {
     public static String getParseredHtml2(String url) throws IOException
     {
         Runtime rt = Runtime.getRuntime();
-        Process p = rt.exec(exePath + " " + jsPath_1 + " " + url);
+//        Process p = rt.exec(exePath_linux + " " + jsPath + " " + url);
+        Process p = rt.exec(exePath_linux + " " + jsPath_1);
         InputStream is = p.getInputStream();
         BufferedReader br = new BufferedReader(new InputStreamReader(is));
         StringBuffer sbf = new StringBuffer();

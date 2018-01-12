@@ -1,6 +1,6 @@
 var page = require('webpage').create();
 var address = 'http://www.baidu.com';//填写需要打印的文件位置
-var output = './screen.png';//存储文件路径和名称
+var output = './img/screen.png';//存储文件路径和名称
 page.viewportSize = { width: 1280, height: 800 };//设置长宽
 
 var flag = phantom.addCookie({
