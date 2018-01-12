@@ -8,7 +8,8 @@ page.open(address, function (status) {
         phantom.exit();
     } else {
         window.setTimeout(function () {
-            page.render(output);
+            console.log("测试测试测试测试");
+            // page.render(output);
             phantom.exit();
         }, 500);
     }

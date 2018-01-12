@@ -16,6 +16,7 @@ public class TestPhantomJs {
     // 也需要和exePath里面的保持一致。否则无法调用
     private static String projectPath = System.getProperty("user.dir");
     private static String jsPath = projectPath + File.separator +"src" + File.separator + "js" + File.separator + "huicong.js";
+    private static String jsPath_1 = projectPath + File.separator +"src" + File.separator + "js" + File.separator + "baidu.js";
     //    private static String exePath = projectPath + File.separator + "phantomjs" + File.separator + "bin" + File.separator
 //            + "phantomjs.exe";
     private static String exePath = projectPath + File.separator + "src"  + File.separator + "tools" + File.separator + "phantomjs.exe";
@@ -33,7 +34,7 @@ public class TestPhantomJs {
     public static String getParseredHtml2(String url) throws IOException
     {
         Runtime rt = Runtime.getRuntime();
-        Process p = rt.exec(exePath + " " + jsPath + " " + url);
+        Process p = rt.exec(exePath + " " + jsPath_1 + " " + url);
         InputStream is = p.getInputStream();
         BufferedReader br = new BufferedReader(new InputStreamReader(is));
         StringBuffer sbf = new StringBuffer();
@@ -42,7 +43,7 @@ public class TestPhantomJs {
         {
             sbf.append(tmp);
         }
-//        System.out.println(sbf.toString());
+        System.out.println(sbf.toString());
         String[] result = sbf.toString().split("companyServiceMod");
         String result2 = "";
         if(result.length >= 2)
