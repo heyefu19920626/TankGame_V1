@@ -22,6 +22,10 @@ public class TestPhantomJs {
     private static String exePath = projectPath + File.separator + "src"  + File.separator + "tools" + File.separator + "phantomjs.exe";
     private static String exePath_linux = projectPath + File.separator + "src"  + File.separator + "tools" + File.separator + "phantomjs";
 
+
+    private String path = this.getClass().getClassLoader().getResource("/").getPath();
+
+
     public static void main(String[] args) throws IOException, SAXException
     {
 
@@ -35,6 +39,7 @@ public class TestPhantomJs {
     // 调用phantomjs程序，并传入js文件，并通过流拿回需要的数据。
     public static String getParseredHtml2(String url) throws IOException
     {
+        System.out.println(TestPhantomJs.class.getResource("/").getPath());
         Runtime rt = Runtime.getRuntime();
 //        Process p = rt.exec(exePath_linux + " " + jsPath + " " + url);
         Process p = rt.exec(exePath_linux + " " + jsPath_1);
@@ -59,5 +64,10 @@ public class TestPhantomJs {
         }
         System.out.println("resut2: "+result2);
         return result2;
+    }
+
+
+    public void printPath(){
+        System.out.println(path);
     }
 }
