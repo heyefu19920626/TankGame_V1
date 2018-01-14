@@ -5,6 +5,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
 import java.util.Vector;
 
 /**
@@ -45,10 +46,43 @@ public class MainPanel extends JPanel implements KeyListener, Runnable {
      */
     private int killEnemys = 0;
 
+    /**
+     * Description:
+     * 开始新游戏 * @param  *
+     *
+     * @param
+     * @return
+     * @author heyefu
+     **/
     public MainPanel() {
         myTank = new MyTank(200, 200, (int) (Math.random() * 4));
         for (int i = 0; i < enemyCount; i++) {
             EnemyTank enemyTank = new EnemyTank((int) (Math.random() * width), (int) (Math.random() * height), (int) (Math.random() * 4));
+            //将面板中的敌人坦克传递给创建的每个坦克
+            enemyTank.setEnemyTanks(enemyTanks);
+            Thread t = new Thread(enemyTank);
+            t.start();
+            enemyTanks.add(enemyTank);
+        }
+        this.setSize(500, 500);
+    }
+
+
+    public MainPanel(ArrayList<String> myTank, ArrayList<String> number, ArrayList<String> enemys) {
+
+
+//        初始化自己坦克
+        this.myTank = new MyTank(Integer.valueOf(myTank.get(0)), Integer.valueOf(myTank.get(1)), Integer.valueOf(myTank.get(2)));
+
+        this.killEnemys = Integer.valueOf(number.get(0));
+        this.enemyCount = Integer.valueOf(number.get(1));
+
+
+        for (int i = 0; i < enemyCount; i++) {
+            String enemy = enemys.get(i);
+            String enemyCoordinate[] = enemy.split(" ");
+
+            EnemyTank enemyTank = new EnemyTank(Integer.valueOf(enemyCoordinate[0]), Integer.valueOf(enemyCoordinate[1]), Integer.valueOf(enemyCoordinate[2]));
             //将面板中的敌人坦克传递给创建的每个坦克
             enemyTank.setEnemyTanks(enemyTanks);
             Thread t = new Thread(enemyTank);
@@ -375,5 +409,14 @@ public class MainPanel extends JPanel implements KeyListener, Runnable {
 
     public Vector<EnemyTank> getEnemyTanks() {
         return enemyTanks;
+    }
+
+
+    public int getEnemyCount() {
+        return enemyCount;
+    }
+
+    public int getKillEnemys() {
+        return killEnemys;
     }
 }

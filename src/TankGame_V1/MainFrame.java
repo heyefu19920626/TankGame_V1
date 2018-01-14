@@ -4,6 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Description:
@@ -27,6 +29,8 @@ public class MainFrame extends JFrame implements Runnable, ActionListener {
     private JMenuItem startGame = null;
     //    保存子菜单
     private JMenuItem saveGame = null;
+    //    读取子菜单
+    private JMenuItem readGame = null;
 
     public MainFrame() {
 
@@ -34,16 +38,20 @@ public class MainFrame extends JFrame implements Runnable, ActionListener {
         game = new JMenu("游戏");
         startGame = new JMenuItem("开始游戏");
         saveGame = new JMenuItem("保存游戏");
+        readGame = new JMenuItem("读取游戏");
 
         this.setJMenuBar(menuBar);
         menuBar.add(game);
         game.add(startGame);
         game.add(saveGame);
+        game.add(readGame);
 
         startGame.setActionCommand("startGame");
         startGame.addActionListener(this);
         saveGame.setActionCommand("saveGame");
         saveGame.addActionListener(this);
+        readGame.setActionCommand("readGame");
+        readGame.addActionListener(this);
 
         beginPanel = new BeginPanel();
         Thread t_BeaginPanel = new Thread(beginPanel);
@@ -110,7 +118,61 @@ public class MainFrame extends JFrame implements Runnable, ActionListener {
                 return;
             }
             this.startGame();
+        } else if (e.getActionCommand().equals("saveGame")) {
+            this.saveGame();
+        } else if (e.getActionCommand().equals("readGame")) {
+            HashMap<String, ArrayList<String>> record = RecordGame.readRecord();
+            this.continueGame(record);
         }
 
+    }
+
+
+    /**
+     * Description:
+     * 保存游戏
+     *
+     * @param
+     * @return void
+     * @author heyefu 下午8:46 18-1-14
+     **/
+    private void saveGame() {
+        RecordGame.saveGame(mainPanel.myTank, mainPanel.getKillEnemys(), mainPanel.getEnemyCount(), mainPanel.getEnemyTanks());
+    }
+
+
+    /**
+     * Description:
+     * 继续游戏
+     *
+     * @param record 读取的存档数据
+     * @return void
+     * @author heyefu 下午8:45 18-1-14
+     **/
+    private void continueGame(HashMap<String, ArrayList<String>> record) {
+
+//        取出自己坦克属性
+        ArrayList<String> myTank = record.get("myTank");
+//        取出击杀坦克数量及剩余坦克数量
+        ArrayList<String> number = record.get("number");
+//        取出敌方坦克属性
+        ArrayList<String> enemy = record.get("enemy");
+
+        if (beginPanel != null) {
+            this.remove(beginPanel);
+            this.beginPanel = null;
+        } else if (mainPanel != null) {
+            this.remove(mainPanel);
+            this.mainPanel = null;
+        }
+
+
+        mainPanel = new MainPanel(myTank, number, enemy);
+        Thread t = new Thread(mainPanel);
+        t.start();
+
+        this.add(mainPanel);
+        this.addKeyListener(mainPanel);
+        this.setVisible(true);
     }
 }
